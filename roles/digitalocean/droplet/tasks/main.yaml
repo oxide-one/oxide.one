@@ -1,0 +1,6 @@
+
+# Create a Virtual Machine
+- name: "Import tasks to handle creation of a virtual machine"
+  ansible.builtin.import_tasks: present.yaml
+  when: state|default('present') == 'present'
+

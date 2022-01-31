@@ -1,0 +1,13 @@
+# Playbook to create a syndicate node in oxide.one
+# A syndicate node is essentially a node that'll serve as a 'source of truth' within oxide.one
+#
+
+- name: "Create and maintain syndicate nodes"
+  hosts: syndicate
+  connection: local
+  tasks:
+    - ansible.builtin.import_role:
+        name: digitalocean/droplet
+      vars:
+        state: present
+        

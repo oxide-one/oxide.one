@@ -1,0 +1,7 @@
+# Slug names for all three
+# https://slugs.do-api.dev/
+
+# Defaults to creating a Debian 11 Image, on an AMD 1GB, 1 CPU system. ($6 a month)
+do_droplet_region: "lon1"
+do_droplet_size: "s-1vcpu-1gb-amd"
+do_droplet_image: "debian-11-x64"
