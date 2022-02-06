@@ -11,3 +11,8 @@
       vars:
         state: present
         
+- name: "Create and maintain syndicate nodes"
+  hosts: syndicate
+  tasks:
+    - name: "Check that python3 is installed"
+      ping:

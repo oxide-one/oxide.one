@@ -1,6 +1,54 @@
+# - name: Gather information about a specific droplet by name
+#   block:
+#     - name: "Fetch information on a droplet"
+#       community.digitalocean.digital_ocean_droplet_info:
+#         oauth_token: "{{ lookup('ansible.builtin.env', 'DO_KEY') }}"
+#         name: "{{ inventory_hostname }}"
+#       register: do_droplet_info
+#   rescue:
+#     - name: "Bail and set a fact so the next task doesn't fail"
+#       ansible.builtin.set_fact:
+#         do_droplet_info:
+#           data: []
 
-# Create a Virtual Machine
-- name: "Import tasks to handle creation of a virtual machine"
-  ansible.builtin.import_tasks: present.yaml
-  when: state|default('present') == 'present'
+- name: Create a new Droplet
+  community.digitalocean.digital_ocean_droplet:
+    unique_name: True
+    state: "{{ state | default('present') }}"
+    oauth_token: "{{ lookup('ansible.builtin.env', 'DO_KEY') }}"
+    name: "{{ inventory_hostname }}"
+    size: "{{ do_droplet_size }}"
+    region: "{{ do_droplet_region }}"
+    image: "{{ do_droplet_image }}"
+    wait_timeout: 500
+    ssh_keys: [ "{{ do_droplet_ssh_key_fingerprint }}" ]
+    project_name: "{{ do_droplet_project_name | default(omit) }}"
+    ipv6: "{{ do_droplet_enable_ipv6 | default(omit) }}"
+    monitoring: "{{ do_droplet_enable_monitoring | default(omit) }}"
+    backups: "{{ do_droplet_enable_backups | default(omit) }}"
+    tags: "{{ do_droplet_tags | default(omit) }}"
+  register: do_droplet
+  # when: (do_droplet_info.data | length == 0) or (state | default('present') == 'absent')
 
+
+- name: "Fetch information on a droplet"
+  community.digitalocean.digital_ocean_droplet_info:
+    oauth_token: "{{ lookup('ansible.builtin.env', 'DO_KEY') }}"
+    name: "{{ inventory_hostname }}"
+  register: do_droplet_info
+  when: (state | default('present')) == 'present'
+
+# - name: Show Droplet info
+#   ansible.builtin.debug:
+#     msg: >
+#       Droplet ID is {{ do_droplet_info.data[0].id }}
+#       First Public IPv4 is {{ (do_droplet_info.data[0].networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address | default('<none>', true) }}
+#       First Private IPv4 is {{ (do_droplet_info.data[0].networks.v4 | selectattr('type', 'equalto', 'private')).0.ip_address | default('<none>', true) }}
+#   when: (state | default('present')) == 'present'
+
+- name: "Set the ansible_host address"
+  ansible.builtin.set_fact:
+    ansible_host: "{{ (do_droplet_info.data[0].networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address | default('<none>', true) }}"
+    ansible_user: root
+    ansible_python_interpreter: "/usr/bin/python3"
+  when: (state | default('present')) == 'present'

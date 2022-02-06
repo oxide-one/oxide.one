@@ -5,3 +5,14 @@
 do_droplet_region: "lon1"
 do_droplet_size: "s-1vcpu-1gb-amd"
 do_droplet_image: "debian-11-x64"
+# https://cloud.digitalocean.com/account/security
+do_droplet_ssh_key_fingerprint: "66:f7:f5:1d:a2:59:47:a9:7f:90:96:bd:75:1e:bb:64"
+# optional
+do_droplet_project_name: "oxide.one"
+do_droplet_enable_monitoring: True
+do_droplet_enable_ipv6: False
+do_droplet_enable_backups: False
+do_droplet_tags:
+  - syndicate
+  - core
+  - monitoring
