@@ -1,15 +1,3 @@
-# - name: Gather information about a specific droplet by name
-#   block:
-#     - name: "Fetch information on a droplet"
-#       community.digitalocean.digital_ocean_droplet_info:
-#         oauth_token: "{{ lookup('ansible.builtin.env', 'DO_KEY') }}"
-#         name: "{{ inventory_hostname }}"
-#       register: do_droplet_info
-#   rescue:
-#     - name: "Bail and set a fact so the next task doesn't fail"
-#       ansible.builtin.set_fact:
-#         do_droplet_info:
-#           data: []
 
 - name: Create a new Droplet
   community.digitalocean.digital_ocean_droplet:
@@ -28,8 +16,6 @@
     backups: "{{ do_droplet_enable_backups | default(omit) }}"
     tags: "{{ do_droplet_tags | default(omit) }}"
   register: do_droplet
-  # when: (do_droplet_info.data | length == 0) or (state | default('present') == 'absent')
-
 
 - name: "Fetch information on a droplet"
   community.digitalocean.digital_ocean_droplet_info:
@@ -37,14 +23,6 @@
     name: "{{ inventory_hostname }}"
   register: do_droplet_info
   when: (state | default('present')) == 'present'
-
-# - name: Show Droplet info
-#   ansible.builtin.debug:
-#     msg: >
-#       Droplet ID is {{ do_droplet_info.data[0].id }}
-#       First Public IPv4 is {{ (do_droplet_info.data[0].networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address | default('<none>', true) }}
-#       First Private IPv4 is {{ (do_droplet_info.data[0].networks.v4 | selectattr('type', 'equalto', 'private')).0.ip_address | default('<none>', true) }}
-#   when: (state | default('present')) == 'present'
 
 - name: "Set the ansible_host address"
   ansible.builtin.set_fact:
