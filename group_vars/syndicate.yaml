@@ -16,3 +16,5 @@ do_droplet_tags:
   - syndicate
   - core
   - monitoring
+
+dns_cf_zone: "oxide.one"

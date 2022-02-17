@@ -14,5 +14,19 @@
 - name: "Create and maintain syndicate nodes"
   hosts: syndicate
   tasks:
-    - name: "Check that python3 is installed"
-      ping:
+    - name: "Ensure that podman is installed"
+      ansible.builtin.package:
+        name: podman
+        state: present
+
+    - name: "Ensure that podman is started and enabled"
+      ansible.builtin.service:
+        name: podman
+        enabled: yes
+        state: started
+
+    - ansible.builtin.import_role:
+        name: cloudflare/dns_record
+      vars:
+        state: present
+        
