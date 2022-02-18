@@ -19,10 +19,10 @@ By default, it'll just add a record to match your Cloudflare Inventory hostname 
 ### Usage
 
 ```yaml
-    - ansible.builtin.import_role:
-        name: cloudflare/dns_record
-      vars:
-        state: present
+- ansible.builtin.import_role:
+    name: cloudflare/dns_record
+  vars:
+    state: present
 ```
  
 ### Required ENV Vars
