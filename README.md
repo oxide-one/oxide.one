@@ -19,4 +19,4 @@ Required variables:
 Roles are Individually documented.
 
 - [cloudflare](./roles/cloudflare/README.md)
-- [digitalocean](.roles/digitalocean/README.md)
+- [digitalocean](./roles/digitalocean/README.md)
