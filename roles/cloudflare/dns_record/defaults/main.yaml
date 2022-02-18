@@ -1,0 +1,4 @@
+dns_cf_record: "{{ inventory_hostname_short }}"
+dns_cf_type: "A"
+dns_cf_value:  "{{ ansible_host }}"
+state: "present"

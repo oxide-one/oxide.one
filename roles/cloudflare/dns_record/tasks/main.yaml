@@ -1,11 +1,9 @@
 - name: Ensure that the inventory hostname points to the dns record
   community.general.cloudflare_dns:
-    zone: "{{ dns_cf_zone }}"
-    record: "{{ dns_cf_record | default(inventory_hostname_short) }}"
-    type: "{{ dns_cf_type | default('A') }}"
-    value: "{{ dns_cf_value | default(ansible_host) }}"
-    state: "{{ state | default('present') }}"
+    zone: "{{ dns_cf_zone | mandatory }}"
+    record: "{{ dns_cf_record }}"
+    type: "{{ dns_cf_type  }}"
+    value: "{{ dns_cf_value }}"
+    state: "{{ state  }}"
     api_token: "{{ lookup('ansible.builtin.env', 'CF_KEY') }}"
-    # account_email: "{{ lookup('ansible.builtin.env', 'CF_EMAIL') }}"
-    # account_api_key:  "{{ lookup('ansible.builtin.env', 'CF_TOKEN') }}"
-  register: record
+  register: cf_record

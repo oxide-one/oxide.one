@@ -1,0 +1,14 @@
+# Defaults to creating a Debian 11 Image, on an AMD 1GB, 1 CPU system. ($6 a month)
+# https://slugs.do-api.dev/
+do_droplet_region: "lon1"
+do_droplet_size: "s-1vcpu-1gb-amd"
+do_droplet_image: "debian-11-x64"
+
+# Enable Monitoring
+do_droplet_enable_monitoring: True
+# Enable IPV6
+do_droplet_enable_ipv6: False
+# Enable Backups
+do_droplet_enable_backups: False
+
+state: "present"

@@ -9,6 +9,10 @@
     - ansible.builtin.import_role:
         name: digitalocean/droplet
       vars:
+        state: absent
+    - ansible.builtin.import_role:
+        name: digitalocean/droplet
+      vars:
         state: present
         
 - name: "Create and maintain syndicate nodes"

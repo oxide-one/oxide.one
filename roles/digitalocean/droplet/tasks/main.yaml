@@ -1,5 +1,5 @@
 
-- name: Create a new Droplet
+- name: Manage a Droplet
   community.digitalocean.digital_ocean_droplet:
     unique_name: True
     state: "{{ state | default('present') }}"
@@ -9,11 +9,11 @@
     region: "{{ do_droplet_region }}"
     image: "{{ do_droplet_image }}"
     wait_timeout: 500
-    ssh_keys: [ "{{ do_droplet_ssh_key_fingerprint }}" ]
+    ssh_keys: [ "{{ do_droplet_ssh_key_fingerprint | mandatory }}" ]
     project_name: "{{ do_droplet_project_name | default(omit) }}"
-    ipv6: "{{ do_droplet_enable_ipv6 | default(omit) }}"
-    monitoring: "{{ do_droplet_enable_monitoring | default(omit) }}"
-    backups: "{{ do_droplet_enable_backups | default(omit) }}"
+    ipv6: "{{ do_droplet_enable_ipv6  }}"
+    monitoring: "{{ do_droplet_enable_monitoring  }}"
+    backups: "{{ do_droplet_enable_backups }}"
     tags: "{{ do_droplet_tags | default(omit) }}"
   register: do_droplet
 
@@ -22,12 +22,12 @@
     oauth_token: "{{ lookup('ansible.builtin.env', 'DO_KEY') }}"
     name: "{{ inventory_hostname }}"
   register: do_droplet_info
-  when: (state | default('present')) == 'present'
+  when: state == 'present'
 
 - name: "Set the ansible_host address"
   ansible.builtin.set_fact:
     ansible_host: "{{ (do_droplet_info.data[0].networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address | default('<none>', true) }}"
     ansible_user: root
-    ansible_python_interpreter: "/usr/bin/python3"
-  when: (state | default('present')) == 'present'
+    # ansible_python_interpreter: "/usr/bin/python3"
+  when: state == 'present'
 
