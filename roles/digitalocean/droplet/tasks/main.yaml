@@ -1,8 +1,7 @@
-
 - name: Manage a Droplet
   community.digitalocean.digital_ocean_droplet:
     unique_name: True
-    state: "{{ state | default('present') }}"
+    state: "{{ state }}"
     oauth_token: "{{ lookup('ansible.builtin.env', 'DO_KEY') }}"
     name: "{{ inventory_hostname }}"
     size: "{{ do_droplet_size }}"
@@ -22,12 +21,11 @@
     oauth_token: "{{ lookup('ansible.builtin.env', 'DO_KEY') }}"
     name: "{{ inventory_hostname }}"
   register: do_droplet_info
-  when: state == 'present'
+  when: state == "present"
 
 - name: "Set the ansible_host address"
   ansible.builtin.set_fact:
     ansible_host: "{{ (do_droplet_info.data[0].networks.v4 | selectattr('type', 'equalto', 'public')).0.ip_address | default('<none>', true) }}"
     ansible_user: root
-    # ansible_python_interpreter: "/usr/bin/python3"
-  when: state == 'present'
+  when: state == "present"
 
