@@ -1,0 +1,46 @@
+vault_token: "{{ lookup('ansible.builtin.env', 'HV_TOKEN') }}"
+vault_ca_path: pki
+vault_cert_name: "{{ inventory_hostname}}"
+
+vault_cert_allow_any_name: false
+vault_cert_allow_bare_domains: false
+vault_cert_allow_glob_domains: false
+vault_cert_allow_ip_sans: true
+vault_cert_allow_localhost: true
+vault_cert_allow_subdomains: true
+vault_cert_allow_token_displayname: false
+vault_cert_allowed_domains: []
+vault_cert_allowed_domains_template: false
+vault_cert_allowed_other_sans: []
+vault_cert_allowed_uri_sans: []
+vault_cert_basic_constraints_valid_for_non_ca: false
+vault_cert_client_flag: true
+vault_cert_code_signing_flag: false
+vault_cert_country: []
+vault_cert_email_protection_flag: false
+vault_cert_enforce_hostnames: true
+vault_cert_ext_key_usage: []
+vault_cert_ext_key_usage_oids: []
+vault_cert_generate_lease: false
+vault_cert_key_bits: 2048
+vault_cert_key_type: rsa
+vault_cert_key_usage:
+- DigitalSignature
+- KeyAgreement
+- KeyEncipherment
+vault_cert_locality: []
+vault_cert_max_ttl: 0
+vault_cert_no_store: false
+vault_cert_not_before_duration: 30
+vault_cert_organization: []
+vault_cert_ou: []
+vault_cert_policy_identifiers: []
+vault_cert_postal_code: []
+vault_cert_province: []
+vault_cert_require_cn: true
+vault_cert_server_flag: true
+vault_cert_signature_bits: 256
+vault_cert_street_address: []
+vault_cert_ttl: 0
+vault_cert_use_csr_common_name: true
+vault_cert_use_csr_sans: true

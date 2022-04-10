@@ -1,0 +1,40 @@
+vault_ca_options:
+  type: pki
+  description: "{{ vault_ca_description }}"
+  config:
+    options:
+    default_lease_ttl: "{{ vault_ca_default_lease_ttl }}"
+    max_lease_ttl: "{{ vault_ca_max_lease_ttl }}"
+    force_no_cache: "{{ vault_ca_force_no_cache }}"
+  local: false
+  seal_wrap: false
+  external_entropy_access: false
+  options:
+
+
+vault_root_cacert_options:
+  # Required
+  common_name: "{{ vault_root_cacert_common_name }}"
+  alt_names: "{{ vault_root_cacert_alt_names }}"
+  ip_sans: "{{ vault_root_cacert_ip_sans }}"
+  uri_sans: "{{ vault_root_cacert_uri_sans }}"
+  other_sans: "{{ vault_root_cacert_other_sans }}"
+  ttl: "{{ vault_root_cacert_ttl }}"
+  format: "{{ vault_root_cacert_format }}"
+  private_key_format: "{{ vault_root_cacert_private_key_format }}"
+  key_type: "{{ vault_root_cacert_key_type }}"
+  key_bits: "{{ vault_root_cacert_key_bits }}"
+  max_path_length: "{{ vault_root_cacert_max_path_length }}"
+  exclude_cn_from_sans: "{{ vault_root_cacert_exclude_cn_from_sans }}"
+  permitted_dns_domains: "{{ vault_root_cacert_permitted_dns_domains }}"
+  ou: "{{ vault_root_cacert_ou }}"
+  organization: "{{ vault_root_cacert_organization }}"
+  country: "{{ vault_root_cacert_country }}"
+  locality: "{{ vault_root_cacert_locality }}"
+  province: "{{ vault_root_cacert_province }}"
+  street_address: "{{ vault_root_cacert_street_address }}"
+  postal_code: "{{ vault_root_cacert_postal_code }}"
+
+vault_ca_urls:
+  crl_distribution_points: "{{ vault_url }}/v1/{{ vault_ca_path }}/crl"
+  issuing_certificates: "{{ vault_url }}/v1/{{ vault_ca_path }}/ca"

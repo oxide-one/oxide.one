@@ -1,0 +1,31 @@
+vault_token: "{{ lookup('ansible.builtin.env', 'HV_TOKEN') }}"
+vault_url: "{{ lookup('ansible.builtin.env', 'HV_URL') }}"
+
+vault_ca_path: pki
+vault_ca_description: "A cool vault"
+vault_ca_default_lease_ttl: "0s"
+vault_ca_max_lease_ttl: "87600h"
+vault_ca_force_no_cache: false
+
+
+vault_root_cacert_type: "exported"
+vault_root_cacert_common_name: "{{ dns_domain }}"
+vault_root_cacert_alt_names:
+vault_root_cacert_ip_sans:
+vault_root_cacert_uri_sans:
+vault_root_cacert_other_sans:
+vault_root_cacert_ttl: "87600h"
+vault_root_cacert_format: "pem_bundle"
+vault_root_cacert_private_key_format: "der"
+vault_root_cacert_key_type: "rsa"
+vault_root_cacert_key_bits:
+vault_root_cacert_max_path_length:
+vault_root_cacert_exclude_cn_from_sans:
+vault_root_cacert_permitted_dns_domains:
+vault_root_cacert_ou:
+vault_root_cacert_organization:
+vault_root_cacert_country:
+vault_root_cacert_locality:
+vault_root_cacert_province:
+vault_root_cacert_street_address:
+vault_root_cacert_postal_code:
